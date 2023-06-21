@@ -492,4 +492,32 @@ class pingButton(discord.ui.View):
 async def buttonping(interaction: discord.Interaction):
     await interaction.response.send_message(content="click button for ping", view=pingButton())
 
+class buttonThatPingsYou(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="ping yourself NOW", style=discord.ButtonStyle.gray)
+    async def pingyourself(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.channel.send(interaction.user.mention)
+
+@client.tree.command(name="pingyourself")
+async def pingyourself(interaction: discord.Interaction):
+    await interaction.response.send_message(content="you should ping yourself, NOW", view=buttonThatPingsYou())
+
+class lotionbutton(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="pass him the lotion", style=discord.ButtonStyle.gray)
+    async def lotion(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.channel.send("someone send <@528048760853495822> male wanking sound i cba to do it rn")
+
+@client.tree.command(name="lotion", description="PASS HIM THE LOTION")
+async def lotion(interaction: discord.Interaction):
+    await interaction.response.send_message(content="https://cdn.discordapp.com/attachments/1049300718705709120/1121067164246495233/caption.gif", view=lotionbutton())
+
+@client.hybrid_command()
+async def theavengers(ctx):
+    await ctx.send("https://cdn.discordapp.com/attachments/889066784836161607/1121063740318687305/e48aa147a71b569871e4ec839c589d64.mp4")
+
 client.run(token)
