@@ -10,6 +10,7 @@ sys.path.insert(0, 'discord.py-self')
 import random
 import json
 import tracemalloc
+import praw
 tracemalloc.start()
 
 with open('theballs\config.json') as f:
@@ -519,5 +520,23 @@ async def lotion(interaction: discord.Interaction):
 @client.hybrid_command()
 async def theavengers(ctx):
     await ctx.send("https://cdn.discordapp.com/attachments/889066784836161607/1121063740318687305/e48aa147a71b569871e4ec839c589d64.mp4")
+
+class randommemebutton(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+    
+    @discord.ui.button(label="click for meme", style=discord.ButtonStyle.gray)
+    async def lotion(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # i cba to do api shit dont make fun of me
+        memelist = ["https://cdn.discordapp.com/attachments/973822597445844992/1021586670048509972/20220819_045732.jpg","https://cdn.discordapp.com/attachments/973822597445844992/1121060076992610324/image.png","https://cdn.discordapp.com/attachments/973822597445844992/1121060056943824987/IMG_1247.png","https://cdn.discordapp.com/attachments/973822597445844992/1121060000652071003/image.png","https://media.discordapp.net/attachments/935989994735169546/1026089708679335997/F8901F14-C05E-45A2-9D5C-04645A604935.gif","https://cdn.discordapp.com/attachments/973822597445844992/1121059831688732834/IMG_20230619_004655_128.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059553245675562/unknown.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059312920428585/IMG_20221010_183640.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059191268835429/IMG_5094.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059043973275658/image.png","https://cdn.discordapp.com/attachments/973822597445844992/1121058984514826260/unknown.png","https://cdn.discordapp.com/attachments/973822597445844992/1121058330505383937/259.png","https://i.ytimg.com/vi/LtGbOeaTwEk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC_05EQuG__BhWdaHd84vJ1nKZTxw","https://cdn.discordapp.com/attachments/973822597445844992/1121057780242075658/vYjM37A5PkiIi6DNfnLDclNQBD9wbN2h58Nuc7kXrVRUJJ9Kfms2Ypn3u5GEI3PxFuJ2BrfKmpbzxgs640-nd-v1.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057647781756938/k3CKanD_MUOLtEqJoAEznFQvJqvkJ4WS3Zzl-Z_gTv1qVFSWtO5xiL6I_yjmgVgMnnA_r30-tZtqs640-nd-v1.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057565720199269/image.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057427777933342/jObRI0L6N15pFqZ4Mia7jLoJaE6s_QnLXNPMR45iX1v2V_MoU2ruLMiy5p3uL4-BaGMHws2AYrMHggs543-nd-v1.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057225855746048/slP60AgOkZs5A-b9SjI183vegzZrMTML9CG2XnHyMlZ0eeoM4AMNvycOp0lmeu7dQjSMZSAXLowdVws640-nd-v1.png"]
+        await interaction.channel.send(random.choice(memelist))
+
+@client.tree.command(name="meme",description="not that many memes, might send the same one twice blah blah blah")
+async def meme(interaction: discord.Interaction):
+    await interaction.response.send_message(content="send coronacrazy more memes to add to this list", view=randommemebutton())
+
+#r = requests.get('https://www.reddit.com/r/learnpython/top/.json?sort=top&t=year', headers={'User-Agent':bot_user_agent_name})
+#top_posts = r.json()
+#top_post_titles = [x['data']['title'] for x in top_posts['data']['children']]
 
 client.run(token)
