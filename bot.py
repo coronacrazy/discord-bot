@@ -533,10 +533,21 @@ class randommemebutton(discord.ui.View):
 
 @client.tree.command(name="meme",description="not that many memes, might send the same one twice blah blah blah")
 async def meme(interaction: discord.Interaction):
-    await interaction.response.send_message(content="send coronacrazy more memes to add to this list", view=randommemebutton())
+    await interaction.response.send_message(content=link, view=(randommemebutton))
+    #await interaction.response.send_message(content="send coronacrazy more memes to add to this list", view=randommemebutton())
 
-#r = requests.get('https://www.reddit.com/r/learnpython/top/.json?sort=top&t=year', headers={'User-Agent':bot_user_agent_name})
-#top_posts = r.json()
-#top_post_titles = [x['data']['title'] for x in top_posts['data']['children']]
+
+reddit_api = requests.get('https://www.reddit.com/r/memes/top/.json?sort=hot', headers = {'User-agent': 'corona bot thingy 0.1'})
+reddit_apidata = reddit_api.text
+parse_json_reddit_apidata = json.loads(reddit_apidata)
+numba = random.randint(0,24)
+link = parse_json_reddit_apidata['data']['children'][numba]['data']['url']
+#Hi corona
+#You cna canhgen the link on line 539 to whatever u want
+#the link variable is the one you should send
+
+reddit_api = requests.get('https://www.reddit.com/r/learnpython/top/.json?sort=top&t=year', headers={'User-Agent':bot_user_agent_name})
+top_posts = r.json()
+top_post_titles = [x['data']['title'] for x in top_posts['data']['children']]
 
 client.run(token)
