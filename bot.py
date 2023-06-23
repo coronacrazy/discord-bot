@@ -11,6 +11,7 @@ import random
 import json
 import tracemalloc
 import praw
+import requests
 tracemalloc.start()
 
 with open('theballs\config.json') as f:
@@ -173,7 +174,7 @@ async def cum(ctx):
 
 @client.hybrid_command()
 async def rape(ctx):
-    await ctx.send("wtf...")
+    await ctx.send("https://tenor.com/view/awkward-umm-what-what-gif-14694719")
 
 @client.hybrid_command()
 async def terrorism(ctx):
@@ -511,7 +512,7 @@ class lotionbutton(discord.ui.View):
 
     @discord.ui.button(label="pass him the lotion", style=discord.ButtonStyle.gray)
     async def lotion(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.channel.send("someone send <@528048760853495822> male wanking sound i cba to do it rn")
+        await interaction.channel.send("someone send coronacrazy male wanking sound i cba to do it rn")
 
 @client.tree.command(name="lotion", description="PASS HIM THE LOTION")
 async def lotion(interaction: discord.Interaction):
@@ -521,33 +522,65 @@ async def lotion(interaction: discord.Interaction):
 async def theavengers(ctx):
     await ctx.send("https://cdn.discordapp.com/attachments/889066784836161607/1121063740318687305/e48aa147a71b569871e4ec839c589d64.mp4")
 
-class randommemebutton(discord.ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
-    
-    @discord.ui.button(label="click for meme", style=discord.ButtonStyle.gray)
-    async def lotion(self, interaction: discord.Interaction, button: discord.ui.Button):
-        # i cba to do api shit dont make fun of me
-        memelist = ["https://cdn.discordapp.com/attachments/973822597445844992/1021586670048509972/20220819_045732.jpg","https://cdn.discordapp.com/attachments/973822597445844992/1121060076992610324/image.png","https://cdn.discordapp.com/attachments/973822597445844992/1121060056943824987/IMG_1247.png","https://cdn.discordapp.com/attachments/973822597445844992/1121060000652071003/image.png","https://media.discordapp.net/attachments/935989994735169546/1026089708679335997/F8901F14-C05E-45A2-9D5C-04645A604935.gif","https://cdn.discordapp.com/attachments/973822597445844992/1121059831688732834/IMG_20230619_004655_128.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059553245675562/unknown.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059312920428585/IMG_20221010_183640.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059191268835429/IMG_5094.png","https://cdn.discordapp.com/attachments/973822597445844992/1121059043973275658/image.png","https://cdn.discordapp.com/attachments/973822597445844992/1121058984514826260/unknown.png","https://cdn.discordapp.com/attachments/973822597445844992/1121058330505383937/259.png","https://i.ytimg.com/vi/LtGbOeaTwEk/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC_05EQuG__BhWdaHd84vJ1nKZTxw","https://cdn.discordapp.com/attachments/973822597445844992/1121057780242075658/vYjM37A5PkiIi6DNfnLDclNQBD9wbN2h58Nuc7kXrVRUJJ9Kfms2Ypn3u5GEI3PxFuJ2BrfKmpbzxgs640-nd-v1.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057647781756938/k3CKanD_MUOLtEqJoAEznFQvJqvkJ4WS3Zzl-Z_gTv1qVFSWtO5xiL6I_yjmgVgMnnA_r30-tZtqs640-nd-v1.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057565720199269/image.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057427777933342/jObRI0L6N15pFqZ4Mia7jLoJaE6s_QnLXNPMR45iX1v2V_MoU2ruLMiy5p3uL4-BaGMHws2AYrMHggs543-nd-v1.png","https://cdn.discordapp.com/attachments/973822597445844992/1121057225855746048/slP60AgOkZs5A-b9SjI183vegzZrMTML9CG2XnHyMlZ0eeoM4AMNvycOp0lmeu7dQjSMZSAXLowdVws640-nd-v1.png"]
-        await interaction.channel.send(random.choice(memelist))
-
-@client.tree.command(name="meme",description="not that many memes, might send the same one twice blah blah blah")
-async def meme(interaction: discord.Interaction):
-    await interaction.response.send_message(content=link, view=(randommemebutton))
-    #await interaction.response.send_message(content="send coronacrazy more memes to add to this list", view=randommemebutton())
-
-
 reddit_api = requests.get('https://www.reddit.com/r/memes/top/.json?sort=hot', headers = {'User-agent': 'corona bot thingy 0.1'})
 reddit_apidata = reddit_api.text
 parse_json_reddit_apidata = json.loads(reddit_apidata)
 numba = random.randint(0,24)
 link = parse_json_reddit_apidata['data']['children'][numba]['data']['url']
+
+# i have no clue how to fix this help
+class memebutton(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="click for another meme", style=discord.ButtonStyle.gray)
+    async def meme(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.channel.send(link)
+
+@client.tree.command(name="meme", description="sends random meme from r/memes on reddit")
+async def meme(interaction: discord.Interaction):
+    if meme:
+        numba = random.randrange(0, 24)
+    await interaction.response.send_message(content=link, view=memebutton())
+
+class cumbutton(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="cum", style=discord.ButtonStyle.gray)
+    async def cum2(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.channel.send("https://tenor.com/view/cum-penis-cum-i-creamed-cumming-xd-gif-20404521")
+
+@client.tree.command(name="cum2")
+async def cum2(interaction: discord.Interaction):
+    await interaction.response.send_message(content="idk why i made this", view=cumbutton())
+    
+# ill fix this later
+
+#reddit_api2 = requests.get('https://www.reddit.com/r/FiftyFifty/top/.json?sort=hot', headers = {'User-agent': 'corona bot thingy 0.2'})
+#reddit_apidata2 = reddit_api2.text
+#parse_json_reddit_apidata2 = json.loads(reddit_apidata2)
+#numba2 = random.randrange(0, 24)
+#link2 = parse_json_reddit_apidata2['data']['children'][numba2]['data']['url']
+
+#class fiftyfiftybutton(discord.ui.View):
+#    def __init__(self):
+#        super().__init__(timeout=None)
+#
+#   @discord.ui.button(label="fiftyfifty", style=discord.ButtonStyle.gray)
+#    async def fiftyfifty(self, interaction: discord.Interaction):
+#        await interaction.channel.send(link2)
+
+#@client.tree.command(name="fiftyfifty", description="probably shouldnt use this command but its a 50 percent chance for a horific image and a 50 percent chance for a not horific image to send")
+#async def fiftyfifty(interaction: discord.Interaction):
+#    await interaction.response.send_message(content=link2, view=fiftyfiftybutton())
+
 #Hi corona
 #You cna canhgen the link on line 539 to whatever u want
 #the link variable is the one you should send
 
-reddit_api = requests.get('https://www.reddit.com/r/learnpython/top/.json?sort=top&t=year', headers={'User-Agent':bot_user_agent_name})
-top_posts = r.json()
-top_post_titles = [x['data']['title'] for x in top_posts['data']['children']]
+#reddit_api = requests.get('https://www.reddit.com/r/learnpython/top/.json?sort=top&t=year', headers={'User-Agent':"corona bot thingy 0.1"})
+#top_posts = r.json()
+#top_post_titles = [x['data']['title'] for x in top_posts['data']['children']]
 
 client.run(token)
