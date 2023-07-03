@@ -635,4 +635,16 @@ async def ultradoublesex(ctx):
     message = await ctx.send("https://txnor.com/vixw/ltg-low-tier-god-meme-gif-23851809")
     await message.add_reaction("😎")
 
+class donberman(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="donberman", style=discord.ButtonStyle.gray)
+    async def doberman(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.channel.send("idk whgy i made this but ping donneman anyway")
+
+@client.tree.command(name="doberman")
+async def doberman(interaction: discord.Interaction):
+    await interaction.response.send_message(content="https://cdn.discordapp.com/attachments/955298743568191528/1125436688827699200/image.png", view=donberman())
+
 client.run(token)
