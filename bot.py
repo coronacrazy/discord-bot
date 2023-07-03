@@ -605,4 +605,20 @@ class ReportModal(discord.ui.Modal, title="report user"):
 async def report(interaction: discord.Interaction):
     await interaction.response.send_modal(ReportModal())
 
+@client.event
+async def on_message(msg):
+        if 'bomb' in msg.content:
+            channel = msg.channel
+            if msg.author.bot:
+                return
+            await channel.send('i have a bomb')
+
+@client.event
+async def on_message(msg):
+    if "i"in msg.content:
+        channel = msg.channel
+        if msg.author.bot:
+            return
+        await channel.send("stop making everything about yourself")
+
 client.run(token)
