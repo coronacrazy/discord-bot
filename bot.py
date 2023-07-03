@@ -30,7 +30,7 @@ async def change_status():
 
 @client.event
 async def on_message(msg):
-    if "i "in msg.content:
+    if "im "in msg.content:
         channel = msg.channel
         if msg.author.bot:
             return
@@ -41,6 +41,12 @@ async def on_message(msg):
         if msg.author.bot:
                 return
         await channel.send('i have a bomb')
+
+    if " love " in msg.content:
+        channel = msg.channel
+        if msg.author.bot:
+            return
+        await channel.send("SAME :fire:")
 
 @client.event
 async def on_ready():
