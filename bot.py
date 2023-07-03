@@ -6,6 +6,8 @@ from itertools import cycle
 from discord import app_commands
 import time
 import sys
+
+from discord.interactions import Interaction
 sys.path.insert(0, 'discord.py-self')
 import random
 import json
@@ -582,5 +584,25 @@ async def cum2(interaction: discord.Interaction):
 #reddit_api = requests.get('https://www.reddit.com/r/learnpython/top/.json?sort=top&t=year', headers={'User-Agent':"corona bot thingy 0.1"})
 #top_posts = r.json()
 #top_post_titles = [x['data']['title'] for x in top_posts['data']['children']]
+
+@client.hybrid_command()
+async def ephemeral(ctx):
+    await ctx.send("only you can see this", ephemeral=True)
+
+class ReportModal(discord.ui.Modal, title="report user"):
+    username = discord.ui.TextInput(label="username of person you wabnt to repoert", placeholder="fatesucks or something", required=True, max_length=20, style=discord.TextStyle.short)
+    userid = discord.ui.TextInput(label="userid of the guy", placeholder="turn developer mode on and right click on the person", required=True, max_length=25, style=discord.TextStyle.short)
+    description = discord.ui.TextInput(label="reason", placeholder="fatesucks broke rule 1: no general in memes", required=True, max_length=200, style=discord.TextStyle.short)
+
+    async def on_submit(self, interaction: discord.Interaction):
+        await interaction.response.send_message(f"{interaction.user.mention} just reported {self.username} for {self.description} what a loser everyone gang up on them")
+
+        channel = discord.utils.get(interaction.guild.channels, name="a")
+
+        await channel.send(f"new report by {interaction.user.mention} \n name: {self.username} \n userid: {self.userid} \n because: {self.description}")
+
+@client.tree.command(name="report", description="report someone")
+async def report(interaction: discord.Interaction):
+    await interaction.response.send_modal(ReportModal())
 
 client.run(token)
