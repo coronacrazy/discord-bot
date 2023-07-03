@@ -647,4 +647,14 @@ class donberman(discord.ui.View):
 async def doberman(interaction: discord.Interaction):
     await interaction.response.send_message(content="https://cdn.discordapp.com/attachments/955298743568191528/1125436688827699200/image.png", view=donberman())
 
+@client.hybrid_command(name="roulleteping", description="1/10 chance to ping everyone")
+async def roulleteping(ctx):
+    number = random.randint(1, 10)
+    if number == 5:
+        await ctx.guild.mention
+    else:
+        await ctx.send("youre safe...")
+        time.sleep(2)
+        await ctx.send("for now")
+
 client.run(token)
