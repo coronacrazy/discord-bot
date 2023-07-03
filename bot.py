@@ -29,6 +29,20 @@ async def change_status():
     await client.change_presence(activity=discord.Game(next(bot_status)))
 
 @client.event
+async def on_message(msg):
+    if "i "in msg.content:
+        channel = msg.channel
+        if msg.author.bot:
+            return
+        await channel.send("stop making everything about yourself")
+
+    if 'bomb' in msg.content:
+        channel = msg.channel
+        if msg.author.bot:
+                return
+        await channel.send('i have a bomb')
+
+@client.event
 async def on_ready():
     await client.tree.sync()
     print("balls")
@@ -362,7 +376,7 @@ async def commands(ctx):
 
 @client.hybrid_command(name="suggest", description="suggest a command")
 async def suggest(ctx, *, suggestion):
-    await ctx.channel.purge(limit=1)
+    await ctx.send("your suggestion has been submitted", ephemeral=True)
     channel = discord.utils.get(ctx.guild.text_channels, name="suggestion")
     suggest = discord.Embed(title="New Suggestion", description=f"{ctx.author.name} Has Suggested\n `{suggestion}`")
     sugg = await channel.send(embed=suggest)
@@ -605,18 +619,14 @@ class ReportModal(discord.ui.Modal, title="report user"):
 async def report(interaction: discord.Interaction):
     await interaction.response.send_modal(ReportModal())
 
-@client.event
-async def on_message(msg):
-    if "i "in msg.content:
-        channel = msg.channel
-        if msg.author.bot:
-            return
-        await channel.send("stop making everything about yourself")
+@client.hybrid_command()
+async def discordsex(ctx):
+    message = await ctx.send("https://txnor.com/view/ltg-low-tier-god-meme-gif-23851809")
+    await message.add_reaction("😎")
 
-    if 'bomb' in msg.content:
-        channel = msg.channel
-        if msg.author.bot:
-                return
-        await channel.send('i have a bomb')
+@client.hybrid_command()
+async def ultradoublesex(ctx):
+    message = await ctx.send("https://txnor.com/vixw/ltg-low-tier-god-meme-gif-23851809")
+    await message.add_reaction("😎")
 
 client.run(token)
