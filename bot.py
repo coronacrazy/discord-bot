@@ -6,7 +6,6 @@ from itertools import cycle
 from discord import app_commands
 import time
 import sys
-
 from discord.interactions import Interaction
 sys.path.insert(0, 'discord.py-self')
 import random
@@ -49,6 +48,26 @@ async def on_message(msg):
         await channel.send("SAME :fire:")
 
 @client.event
+async def on_guild_join(guild):
+    with open("theballs\mutes.json", "r") as f:
+        muteRole = json.load(f)
+
+        muteRole[str(guild.id)] = None
+
+    with open("theballs\mutes.json", "w") as f:
+        json.dump(muteRole, f, indent=4)
+
+@client.event
+async def on_guild_remove(guild):
+    with open("theballs\mutes.json", "r") as f:
+        muteRole = json.load(f)
+
+        muteRole.pop(str(guild.id))
+
+    with open("theballs\mutes.json", "w") as f:
+        json.dump(muteRole, f, indent=4)
+
+@client.event
 async def on_ready():
     await client.tree.sync()
     print("balls")
@@ -89,6 +108,59 @@ class TestMenuButton(discord.ui.View):
     @discord.ui.button(label="actuallyme",style=discord.ButtonStyle.red)
     async def test2(self, interaction: discord.Interaction, Button: discord.ui.Button):
         await interaction.channel.send(content="i h (real)")
+
+@client.hybrid_command()
+@commands.has_permissions(ban_members=True)
+async def setmuterole(ctx, role: discord.Role):
+    with open("theballs\mutes.json", "r") as f:
+        muteRole = json.load(f)
+
+        muteRole[str(ctx.guild.id)] = role.name
+
+        with open("theballs\mutes.json", "w") as f:
+            json.dump(muteRole, f, indent=4)
+
+    conf_embed=discord.Embed(title="success", colour=discord.Colour.gold())
+    conf_embed.add_field(name="mute role has been set", value=f"the mute role has been changed to {role.mention}", inline= False)
+
+    await ctx.send(embed=conf_embed)
+
+@client.hybrid_command()
+@commands.has_permissions(ban_members=True)
+async def mute(ctx, member: discord.Member):
+    with open("theballs\mutes.json", "r") as f:
+        role = json.load(f)
+        
+    mute_role = discord.utils.get(ctx.guild.roles, name=role[str(ctx.guild.id)])
+    
+    await member.add_roles(mute_role)
+    
+    conf_embed=discord.Embed(title="success", colour=discord.Colour.gold())
+    conf_embed.add_field(name=f"muted", value=f"{member}", inline= False)
+
+    await ctx.send(embed=conf_embed)
+
+@client.hybrid_command()
+@commands.has_permissions(ban_members=True)
+async def unmute(ctx, member: discord.Member):
+    with open("theballs\mutes.json", "r") as f:
+        role = json.load(f)
+        
+    mute_role = discord.utils.get(ctx.guild.roles, name=role[str(ctx.guild.id)])
+    
+    await member.remove_roles(mute_role)
+    
+    
+    conf_embed=discord.Embed(title="success", colour=discord.Colour.gold())
+    conf_embed.add_field(name=f"unmuted", value=f"{member}", inline= False)
+
+    await ctx.send(embed=conf_embed)
+
+@client.hybrid_command()
+@commands.has_permissions(ban_members=True)
+async def cease(ctx, ammount : int):
+    await ctx.channel.purge(limit = ammount+1)
+    await ctx.send(f"Successfuly purged {ammount} messages", delete_after=10)
 
 @client.tree.command(name="button")
 async def button(interaction: discord.Interaction):
@@ -152,12 +224,12 @@ async def ban(ctx, member: discord.Member, modreason):
     await ctx.send(embed=conf_embed)
 
 @client.hybrid_command(aliases = ["pfp", "picture"])
-async def avatar(ctx):
+async def avatar(ctx, member : discord.Member):
     embed_message = discord.Embed(title = "", description="", colour=discord.Colour.random())
-    embed_message.set_author(name=f"{ctx.author.mention}'s avatar",icon_url=ctx.author.avatar)
-    embed_message.set_image(url=ctx.author.avatar)
+    embed_message.set_author(name=f"{ctx.author.mention}'s avatar",icon_url=member.avatar)
+    embed_message.set_image(url=member.avatar)
     embed_message.add_field(name="", value="", inline=(False))
-    embed_message.set_footer(text="", icon_url=ctx.author.avatar)
+    embed_message.set_footer(text="", icon_url=member.avatar)
 
     await ctx.send(embed = embed_message)
 
@@ -167,16 +239,7 @@ async def balls(ctx):
 
 @client.hybrid_command()
 async def list(ctx):
-    embed_message = discord.Embed(title = "list of commands", description="", colour=discord.Colour.random())
-
-    embed_message.set_author(name=f"",icon_url=ctx.author.avatar)
-
-    #embed_message.add_field(name="balls\ntry it\n\nhomophobic\navatar\nsends image of your own avatar\n\nembed\ntesting out embed commands\n\niloveballs\nracist\nping\nshows the bot's ping\n\nbigping\npings you a lot\n\nrules\nshows rules\n\ncum\n\nrape\n\nsex\n\nisis\nwhy?\n\nterrorism\nالله أكبر\n\nliveleak\nliveleak website\n\npoop", value="", inline=(False))
-    #i will find a way to keep descriptions for the commands
-    embed_message.add_field(name="balls\nhomophobic\navatar\nembed\niloveballs\nracist\nping\nbigping\nrules\ncum\nrape\nsex\nisis\nterrorism\nliveleak\npoop\nthugshaker\nfart\nridley\nmen\nambatukum\namongussex\nfortnite\nblackmen\nblackniggerhangyourself\npenis\nletmeseeyourballs\npenisfactory\nsuckingdick\nthisismykingdomcum\nhundredyearoldmilfs", value="", inline=(False))
-    embed_message.set_footer(text="all commands have to start with: !")
-
-    await ctx.send(embed = embed_message)
+    await ctx.send("seraph\nhelpme\npingyourself\nping\nlotion\ntheavengers\nmeme\nreport\ndiscordsex\nephemeral\nultradoublesex\nroulleteping\nbetterbigping\nohio\nme\ncoronacrazy\nfurry\nkys\nidrinkcum\nsigmamale\nandrewtate\nopps\ngang\nblud\ndickpick\ncumman\npadi\ncease\ntemp\npadipumppic\nroullete\nfridge\ndonneman\npadi2\nhelpme\nmeme\ncum2\njackoff\njeffreydhamer\nfortniteballs\ngaysex\nrenegaderaidernaked\ngaymidget\nmehavingsex\nmehavingfriends\ngrass\ngonorhea\ndhiarhea\nockyway\nohio\nmoyai\nwhois\ncommands\nsuggest\nballs\nhomophobic\navatar\nembed\niloveballs\nracist\nping\nbigping\nrules\ncum\nrape\nsex\nisis\nterrorism\nliveleak\npoop\nthugshaker\nfart\nridley\nmen\nambatukum\namongussex\nfortnite\nblackmen\nblackniggerhangyourself\npenis\nletmeseeyourballs\npenisfactory\nsuckingdick\nthisismykingdomcum\nhundredyearoldmilfs")
 
 @client.hybrid_command()
 async def bigping(ctx):
@@ -469,11 +532,6 @@ async def padi(ctx):
     await ctx.send("https://media.discordapp.net/attachments/954493268018733126/1005790359764344942/C0C58EBF-B8CA-4DAB-89CC-CAE4CD49CEE1.gif")
 
 @client.hybrid_command()
-async def cease(ctx, ammount : int):
-    await ctx.channel.purge(limit = ammount+1)
-    await ctx.send(f"Successfuly purged {ammount} messages", delete_after=10)
-
-@client.hybrid_command()
 async def temp(ctx):
     await ctx.send("woooooh temporary message jumpscare", delete_after=7)
 
@@ -649,12 +707,21 @@ async def doberman(interaction: discord.Interaction):
 
 @client.hybrid_command(name="roulleteping", description="1/10 chance to ping everyone")
 async def roulleteping(ctx):
-    number = random.randint(1, 10)
-    if number == 5:
-        await ctx.guild.mention
-    else:
-        await ctx.send("youre safe...")
-        time.sleep(2)
-        await ctx.send("for now")
+    if random.randint(1,10) == 10:
+        await ctx.send(f"{ctx.guild.mention} pinga")
+
+@client.hybrid_command()
+async def betterbigping(ctx, member: discord.User = None):
+    if member is None:
+        member = ctx.author
+    elif member is not None:
+        member = member
+    await ctx.send(member.mention)
+    await ctx.send(member.mention)
+    await ctx.send(member.mention)
+
+@client.hybrid_command()
+async def seraph(ctx):
+    await ctx.send("@everyone")
 
 client.run(token)
