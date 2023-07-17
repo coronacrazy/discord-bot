@@ -46,6 +46,12 @@ async def on_message(msg):
         if msg.author.bot:
             return
         await channel.send("SAME :fire:")
+    
+    if " ananas " in msg.content:
+        channel = msg.channel
+        if msg.author.bot:
+            return
+        await channel.send("ananas")
 
 @client.event
 async def on_guild_join(guild):
@@ -183,6 +189,25 @@ async def homophobic(ctx):
 async def iloveballs(ctx):
     await ctx.send("bro same")
 
+class plotButton(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="yes", style=discord.ButtonStyle.gray)
+    async def plotButtonNo(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.channel.send("based")
+        await interaction.channel.send("https://tenor.com/view/meme-gif-25868570")
+    @discord.ui.button(label="no", style=discord.ButtonStyle.gray)    
+    async def plotButtonYes(self, interaction: discord.Interaction, button: discord.ui.Button):
+        await interaction.channel.send("oh... thats kind of lame")
+        time.sleep(1)
+        await interaction.channel.send("i think you like this so here you go")
+        await interaction.channel.send("https://pornhub.com/gay")
+
+@client.tree.command(name="plot")
+async def plot(interaction: discord.Interaction):
+    await interaction.response.send_message(content="do you watch porn for the plot", view=plotButton)
+
 @client.hybrid_command()
 async def embed(ctx):
     embed_message = discord.Embed(title = "ok", description="ok", colour=discord.Colour.random())
@@ -225,8 +250,12 @@ async def ban(ctx, member: discord.Member, modreason):
 
 @client.hybrid_command(aliases = ["pfp", "picture"])
 async def avatar(ctx, member : discord.Member):
+    if member is None:
+        member = ctx.author
+    elif member is not None:
+        member = member
     embed_message = discord.Embed(title = "", description="", colour=discord.Colour.random())
-    embed_message.set_author(name=f"{ctx.author.mention}'s avatar",icon_url=member.avatar)
+    embed_message.set_author(name=f"{member.mention}'s avatar",icon_url=member.avatar)
     embed_message.set_image(url=member.avatar)
     embed_message.add_field(name="", value="", inline=(False))
     embed_message.set_footer(text="", icon_url=member.avatar)
@@ -239,7 +268,7 @@ async def balls(ctx):
 
 @client.hybrid_command()
 async def list(ctx):
-    await ctx.send("seraph\nhelpme\npingyourself\nping\nlotion\ntheavengers\nmeme\nreport\ndiscordsex\nephemeral\nultradoublesex\nroulleteping\nbetterbigping\nohio\nme\ncoronacrazy\nfurry\nkys\nidrinkcum\nsigmamale\nandrewtate\nopps\ngang\nblud\ndickpick\ncumman\npadi\ncease\ntemp\npadipumppic\nroullete\nfridge\ndonneman\npadi2\nhelpme\nmeme\ncum2\njackoff\njeffreydhamer\nfortniteballs\ngaysex\nrenegaderaidernaked\ngaymidget\nmehavingsex\nmehavingfriends\ngrass\ngonorhea\ndhiarhea\nockyway\nohio\nmoyai\nwhois\ncommands\nsuggest\nballs\nhomophobic\navatar\nembed\niloveballs\nracist\nping\nbigping\nrules\ncum\nrape\nsex\nisis\nterrorism\nliveleak\npoop\nthugshaker\nfart\nridley\nmen\nambatukum\namongussex\nfortnite\nblackmen\nblackniggerhangyourself\npenis\nletmeseeyourballs\npenisfactory\nsuckingdick\nthisismykingdomcum\nhundredyearoldmilfs")
+    await ctx.send("increasehealth\nmfw\nqualitycontent\nseraph\nhelpme\npingyourself\nping\nlotion\ntheavengers\nmeme\nreport\ndiscordsex\nephemeral\nultradoublesex\nroulleteping\nbetterbigping\nohio\nme\ncoronacrazy\nfurry\nkys\nidrinkcum\nsigmamale\nandrewtate\nopps\ngang\nblud\ndickpick\ncumman\npadi\ncease\ntemp\npadipumppic\nroullete\nfridge\ndonneman\npadi2\nhelpme\nmeme\ncum2\njackoff\njeffreydhamer\nfortniteballs\ngaysex\nrenegaderaidernaked\ngaymidget\nmehavingsex\nmehavingfriends\ngrass\ngonorhea\ndhiarhea\nockyway\nohio\nmoyai\nwhois\ncommands\nsuggest\nballs\nhomophobic\navatar\nembed\niloveballs\nracist\nping\nbigping\nrules\ncum\nrape\nsex\nisis\nterrorism\nliveleak\npoop\nthugshaker\nfart\nridley\nmen\nambatukum\namongussex\nfortnite\nblackmen\nblackniggerhangyourself\npenis\nletmeseeyourballs\npenisfactory\nsuckingdick\nthisismykingdomcum\nhundredyearoldmilfs")
 
 @client.hybrid_command()
 async def bigping(ctx):
@@ -529,15 +558,12 @@ async def cumman(ctx):
 
 @client.hybrid_command()
 async def padi(ctx):
-    await ctx.send("https://media.discordapp.net/attachments/954493268018733126/1005790359764344942/C0C58EBF-B8CA-4DAB-89CC-CAE4CD49CEE1.gif")
+    list = "https://media.discordapp.net/attachments/954493268018733126/1005790359764344942/C0C58EBF-B8CA-4DAB-89CC-CAE4CD49CEE1.gif " "https://media.discordapp.net/attachments/954493268018733126/1005790359764344942/C0C58EBF-B8CA-4DAB-89CC-CAE4CD49CEE1.gif " "https://cdn.discordapp.com/attachments/1004081360182448262/1118827270002454598/Screenshot_20230615_105918_Snapchat.jpg " "https://cdn.discordapp.com/attachments/1104367411957866496/1120659459241410582/IMG_3464.jpg " "https://cdn.discordapp.com/attachments/1049300718705709120/1126857622830727188/caption.png " "https://cdn.discordapp.com/attachments/1004081360182448262/1126856768987856936/IMG_3543.png "
+    await ctx.send(list)
 
 @client.hybrid_command()
 async def temp(ctx):
     await ctx.send("woooooh temporary message jumpscare", delete_after=7)
-
-@client.hybrid_command()
-async def padipumppic(ctx):
-    await ctx.send("https://cdn.discordapp.com/attachments/1004081360182448262/1118827270002454598/Screenshot_20230615_105918_Snapchat.jpg")
 
 @client.hybrid_command()
 async def roullete(ctx):
@@ -552,10 +578,6 @@ async def fridge(ctx):
 @client.hybrid_command()
 async def donneman(ctx):
     await ctx.send("https://cdn.discordapp.com/attachments/1104367411957866496/1120435822118846604/20230619_213034.jpg")
-
-@client.hybrid_command()
-async def padi2(ctx):
-    await ctx.send("https://cdn.discordapp.com/attachments/1104367411957866496/1120659459241410582/IMG_3464.jpg")
         
 @client.hybrid_command()
 async def helpme(ctx):
@@ -707,7 +729,7 @@ async def doberman(interaction: discord.Interaction):
 
 @client.hybrid_command(name="roulleteping", description="1/10 chance to ping everyone")
 async def roulleteping(ctx):
-    if random.randint(1,10) == 10:
+    if random.randint(1,5) == 5:
         await ctx.send(f"{ctx.guild.mention} pinga")
 
 @client.hybrid_command()
@@ -716,12 +738,56 @@ async def betterbigping(ctx, member: discord.User = None):
         member = ctx.author
     elif member is not None:
         member = member
-    await ctx.send(member.mention)
-    await ctx.send(member.mention)
-    await ctx.send(member.mention)
+    channel = ctx.channel
+    await channel.send(member.mention)
+    await channel.send(member.mention)
+    await channel.send(member.mention)
 
 @client.hybrid_command()
-async def seraph(ctx):
-    await ctx.send("@everyone")
+async def poll(ctx, *, suggestion):
+    suggest = discord.Embed(title="New Poll", description=f"{suggestion}")
+    sugg = await ctx.send(embed=suggest)
+    await sugg.add_reaction("👍")
+    await sugg.add_reaction("👎")
+
+@client.hybrid_command()
+async def increasehealth(ctx):
+    await ctx.send("https://media.discordapp.net/attachments/720602225486856233/1006668096074952845/73375891-36CE-4BBF-B484-ECFCDA383F61.gif")
+
+@client.hybrid_command()
+async def qualitycontent(ctx):
+    await ctx.send("https://www.youtube.com/watch?v=Ez-lB078WRM")
+
+@client.hybrid_command()
+async def mfw(ctx):
+    await ctx.send("https://www.youtube.com/watch?v=Ez-lB078WRM")
+
+@client.hybrid_command()
+async def supersecretmessage(ctx):
+    await ctx.author.send("seraph crabby aaaaaaaaaaaaaa")
+    await ctx.send("check dms bbg")
+
+@client.hybrid_command()
+async def harras(ctx, member: discord.User = None):
+    if member is None:
+        member = ctx.author
+    elif member is not None:
+        member = member
+
+    await ctx.send(f"you successfully harrased {member}", ephemeral=True)
+    await member.send("sup bbg")
+    await member.send("are you a woman")
+    time.sleep(1)
+    await member.send("cuz you mad ugly fr")
+
+@client.hybrid_command()
+async def iqtest(ctx, member: discord.User):
+    if member is None:
+        member = ctx.author
+    elif member is not None:
+        member = member
+
+    await ctx.send(f"{member.mention}'s iq is {random.randint(1, 200)}")
+
 
 client.run(token)
